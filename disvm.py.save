@@ -1,0 +1,40 @@
+import discord, os
+from discord.ext import commands
+
+# インテントの生成
+intents = discord.Intents.default()
+intents.message_content = True
+
+
+bot = discord.ext.commands.Bot(command_prefix = "!",intents=intents);
+aaaaajii# クライアントの生成
+client = discord.Client(intents=intents)
+
+# discordと接続した時に呼ばれる
+@client.event
+async def on_ready():
+    print(f'We have logged in as {client.user}')
+
+# メッセージを受信した時に呼ばれる
+@client.event
+async def on_message(message):
+    # 自分のメッセージを無効
+    if message.author == client.user:
+        return
+
+    # メッセージが"$hello"で始まっていたら"Hello!"と応答
+    if message.content.startswith('$hello'):
+        await message.channel.send('Hello!')
+
+
+
+@bot.command()
+async def ubuntu(ctx, arg1, arg2):
+    com = "python3 /home/yamato/image/vm.py " + str(arg1) + " " + str(arg2)
+    os.system(com)
+    await ctx.send(f'ubuntuを作成しました。ubuntu-{arg1}のipアドレスは10.254.6.{arg1}で、合計{arg2}つのubuntuVMを作成しました。')
+
+
+# クライアントの実行
+client.run('MTA4Njk0OTQxNTAyMzAzMDM0NA.GQORqB.aYmqEezIjvVOsPsD0Ja0cPQn_Q8YSNKqQUjxXk')
+bot.run("MTA4Njk0OTQxNTAyMzAzMDM0NA.GQORqB.aYmqEezIjvVOsPsD0Ja0cPQn_Q8YSNKqQUjxXk")
